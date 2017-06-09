@@ -1,0 +1,50 @@
+<dashboard>
+  <label>Novels DM approaches used in PLE.</label>
+  <description>Aim on identify improvements and novels approaches in data mining techniques used in product line engineering.</description>
+  <row>
+    <panel>
+      <title>RQ13: What techniques can be exploited in engineering product lines?</title>
+      <table>
+        <title>Present some examples. Click for go to paper.</title>
+        <search>
+          <query>index=paper technique AND product   |table DOI titulo</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">6</option>
+        <option name="dataOverlayMode">heatmap</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">http://dx.doi.org/$click.value$</link>
+        </drilldown>
+      </table>
+    </panel>
+    <panel>
+      <title>RQ14: Among the documents found are evident the innovative proposals  or novels approach for product line engineering?</title>
+      <table>
+        <title>Present some examples. Click for go to paper.</title>
+        <search>
+          <query>index=paper novel* OR innovative   |table DOI titulo</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">6</option>
+        <option name="dataOverlayMode">heatmap</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">http://dx.doi.org/$click.value$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>

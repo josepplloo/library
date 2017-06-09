@@ -1,0 +1,133 @@
+{
+    "modelName": "Revision_de_la_literatura",
+    "displayName": "Revisión de la literatura",
+    "description": "",
+    "objectSummary": {
+        "Event-Based": 0,
+        "Transaction-Based": 0,
+        "Search-Based": 1
+    },
+    "objects": [
+        {
+            "objectName": "Revisin_de_la_literatura",
+            "displayName": "Revisión de la literatura",
+            "parentName": "BaseSearch",
+            "fields": [
+                {
+                    "fieldName": "palabra_clave",
+                    "owner": "Revisin_de_la_literatura",
+                    "type": "string",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "palabra clave",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "tipo_documento",
+                    "owner": "Revisin_de_la_literatura",
+                    "type": "string",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "tipo de documento",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "titulo",
+                    "owner": "Revisin_de_la_literatura",
+                    "type": "string",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "titulo",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "autor",
+                    "owner": "Revisin_de_la_literatura",
+                    "type": "string",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "autor",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "doi",
+                    "owner": "Revisin_de_la_literatura",
+                    "type": "string",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "doi",
+                    "comment": ""
+                }
+            ],
+            "calculations": [
+                {
+                    "outputFields": [
+                        {
+                            "fieldName": "journal",
+                            "owner": "Revisin_de_la_literatura",
+                            "type": "string",
+                            "fieldSearch": "",
+                            "required": false,
+                            "multivalue": false,
+                            "hidden": false,
+                            "editable": true,
+                            "displayName": "Lugar de publicación",
+                            "comment": ""
+                        }
+                    ],
+                    "inputField": "_raw",
+                    "calculationID": "ms75k7ostt9su97i5gvzsq0k9",
+                    "owner": "Revisin_de_la_literatura",
+                    "editable": true,
+                    "comment": "",
+                    "calculationType": "Rex",
+                    "expression": "JF\\s*\\-\\s*(?P<journal>.*?)\\n"
+                },
+                {
+                    "outputFields": [
+                        {
+                            "fieldName": "fecha",
+                            "owner": "Revisin_de_la_literatura",
+                            "type": "number",
+                            "fieldSearch": "",
+                            "required": false,
+                            "multivalue": false,
+                            "hidden": false,
+                            "editable": true,
+                            "displayName": "fecha",
+                            "comment": ""
+                        }
+                    ],
+                    "inputField": "_raw",
+                    "calculationID": "txja6il11k1dxmurd5gtoi529",
+                    "owner": "Revisin_de_la_literatura",
+                    "editable": true,
+                    "comment": "",
+                    "calculationType": "Rex",
+                    "expression": "Y1\\s*\\-\\s*(?P<fecha>.*?)\\/"
+                }
+            ],
+            "constraints": [],
+            "lineage": "Revisin_de_la_literatura",
+            "baseSearch": "index=paper  | rex field=_raw \"DO\\s*\\-\\s*(?P<doi>.*?)\\n\" | rex field=_raw \"A1\\s*\\-\\s*(?P<autor>.*?)\\n\" max_match=10| rex field=_raw \"KW\\s*\\-\\s*(?P<palabra_clave>.*?)\\n\" max_match=20 | rex field=_raw \"JF\\s*\\-\\s*(?P<journal>.*?)\\n\" | rex field=_raw \"TY\\s*\\-\\s*(?P<tipo_documento>.*?)\\n\" |rex field=_raw \"Y1\\s*\\-\\s*(?P<fecha>.*?)\\n\" | rex field=_raw \"T1\\s*\\-\\s*(?P<titulo>.*?)\\n\""
+        }
+    ],
+    "objectNameList": [
+        "Revisin_de_la_literatura"
+    ]
+}

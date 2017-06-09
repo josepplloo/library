@@ -1,0 +1,50 @@
+<dashboard>
+  <label>DM on the automation of FM.</label>
+  <description>To evaluate data mining techniques found considering the automation of features models.</description>
+  <row>
+    <panel>
+      <title>RQ11: Can we validate the correct use of data mining techniques in product lines engineering?</title>
+      <table>
+        <title>Present some examples. Click for go to paper.</title>
+        <search>
+          <query>index=paper  "validate"  |table DOI titulo</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">6</option>
+        <option name="dataOverlayMode">heatmap</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">http://dx.doi.org/$click.value$</link>
+        </drilldown>
+      </table>
+    </panel>
+    <panel>
+      <title>RQ12: Do the studies found in the literature support the automation of data mining techniques?</title>
+      <table>
+        <title>Present some examples. Click for go to paper.</title>
+        <search>
+          <query>index=paper autom* |table DOI titulo</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">6</option>
+        <option name="dataOverlayMode">heatmap</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">http://dx.doi.org/$click.value$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>

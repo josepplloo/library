@@ -1,0 +1,107 @@
+[app/ui]
+version = 6.5.0
+modtime = 1478615242.456389000
+
+[app/launcher]
+version = 6.5.0
+modtime = 1478615242.458771000
+
+[props/xris]
+owner = admin
+version = 6.5.0
+modtime = 1478631380.364375000
+
+[views/revisin_de_la_literatura]
+export = none
+owner = admin
+version = 6.5.0
+modtime = 1494367802.840878000
+
+[nav/default]
+version = 6.5.0
+modtime = 1479409197.243582000
+
+[datamodels/Revision_de_la_literatura]
+export = none
+owner = admin
+version = 6.6.0
+modtime = 1495663433.749118000
+
+[models/Revision_de_la_literatura]
+export = none
+owner = admin
+version = 6.6.0
+modtime = 1495663433.754393000
+
+[views/navegator]
+export = none
+owner = admin
+version = 6.5.0
+modtime = 1486591459.551632000
+
+[views/goal1]
+version = 6.6.0
+modtime = 1496960415.583446000
+
+[lookups/autores.csv]
+access = read : [ * ], write : [ admin, power ]
+export = system
+owner = admin
+version = 6.6.0
+modtime = 1496015103.112505000
+
+[transforms/autoreslokup]
+export = system
+owner = admin
+version = 6.5.0
+modtime = 1494388841.527983000
+
+[indexes/paper]
+owner = admin
+version = 6.6.0
+modtime = 1495658969.982706000
+
+[inputs/monitor%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2Flibrary%2Finfo%2Fsms.ris]
+owner = admin
+version = 6.6.0
+modtime = 1495658987.017533000
+
+[props/bib]
+owner = admin
+version = 6.6.0
+modtime = 1496016887.496300000
+
+[indexes/paperbib]
+owner = admin
+version = 6.6.0
+modtime = 1496016944.412669000
+
+[indexes/paperjson]
+owner = admin
+version = 6.6.0
+modtime = 1496333399.571318000
+
+[props/source%3A%3A%2FApplications%2FSplunk%2Fetc%2Fapps%2Flibrary%2Finfo%2Fsms.ris/EXTRACT-DOI]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = admin
+version = 6.6.0
+modtime = 1496502275.971546000
+
+[views/goal2]
+version = 6.6.0
+modtime = 1496965664.905446000
+
+[views/goal3]
+version = 6.6.0
+modtime = 1496966040.835527000
+
+[views/goal4]
+version = 6.6.0
+modtime = 1496966492.050109000
+
+[props/source%3A%3A%2FApplications%2FSplunk%2Fetc%2Fapps%2Flibrary%2Finfo%2Fsms.ris/EXTRACT-titulo]
+export = none
+owner = admin
+version = 6.6.0
+modtime = 1496537538.615840000

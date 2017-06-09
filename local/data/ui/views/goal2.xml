@@ -1,0 +1,180 @@
+<dashboard>
+  <label>DM in PLE</label>
+  <description>For identify and characterize data mining techniques used in product line engineering process.</description>
+  <row>
+    <panel>
+      <title>RQ5: What algorithms or techniques are used in the life cycle of the product line engineering for creating feature models?</title>
+      <table>
+        <title>Present some examples. Click for go to paper.</title>
+        <search>
+          <query>index=paper *technique*  AND "feature model" |table DOI titulo</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">6</option>
+        <option name="dataOverlayMode">heatmap</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">http://dx.doi.org/$click.value$</link>
+        </drilldown>
+      </table>
+    </panel>
+    <panel>
+      <title>RQ6: What data mining techniques studies are used in product line engineering?</title>
+      <table>
+        <title>Present some examples. Click for go to paper.</title>
+        <search>
+          <query>index=paper *technique*   |table DOI titulo</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">6</option>
+        <option name="dataOverlayMode">heatmap</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">http://dx.doi.org/$click.value$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Papers per years</title>
+      <chart>
+        <title>Select a range of papers</title>
+        <search>
+          <query>index=paper | rex field=_raw "A1\s*\-\s*(?P&lt;autor&gt;.*?)\n" max_match=10| rex field=_raw "KW\s*\-\s*(?P&lt;palabra_clave&gt;.*?)\n" max_match=20 | rex field=_raw "JF\s*\-\s*(?P&lt;journal&gt;.*?)\n" | rex field=_raw "TY\s*\-\s*(?P&lt;tipo_documento&gt;.*?)\n" |rex field=_raw "Y1\s*\-\s*(?P&lt;fecha&gt;.*?)\/" | rex field=_raw "T1\s*\-\s*(?P&lt;titulo&gt;.*?)\n" |chart count BY fecha, tipo_documento | rename tipo_documento AS "Tipo de Documento"</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <selection>
+          <set token="selection.earliest">$start$</set>
+          <set token="selection.latest">$end$</set>
+          <set token="start.count">$start.count$</set>
+          <set token="end.count">$end.count$</set>
+        </selection>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.text">Year</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>RQ7: What domain contexts are used by techniques found?</title>
+      <table>
+        <title>Papers from $selection.earliest$ to $selection.latest$</title>
+        <search>
+          <query>index=paperbib | eval DOI=rtrim(doi,"}")|eval DOI=substr(DOI,2)|eval Year=rtrim(year,"}")|eval Year=substr(Year,2)| eval Title=rtrim(title,"}")|eval Title=substr(Title,3)|eval Tags=rtrim(mendeley_tags,"}")|eval Tags=substr(Tags,2)|eval Tags=split(Tags,",")|WHERE Year &gt;=$selection.earliest$ AND Year &lt;= $selection.latest$|table DOI Title Tags Year</query>
+          <earliest>0</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">5</option>
+        <option name="dataOverlayMode">highlow</option>
+        <option name="drilldown">cell</option>
+        <option name="rowNumbers">true</option>
+        <option name="wrap">true</option>
+        <format type="color" field="Tags">
+          <colorPalette type="map">{"naranja":#ED8440,"gris":#6DB7C6,"purpura":#6A5C9E,"rojo":#D93F3C,"azul":#3863A0}</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>RQ8: How are defined the data mining techniques found in documents?</title>
+      <table>
+        <title>Click for go to the definition papers.</title>
+        <search>
+          <query>index=paper *technique*  AND "feature model" |table DOI titulo</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">6</option>
+        <option name="dataOverlayMode">heatmap</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">http://dx.doi.org/$click.value$</link>
+        </drilldown>
+      </table>
+    </panel>
+    <panel>
+      <title>RQ9: At what stage in the product lifecycle do you use data mining techniques?</title>
+      <table>
+        <title>Click for go to the definition papers.</title>
+        <search>
+          <query>index=paper *stage*  AND engineering  |table DOI titulo</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">6</option>
+        <option name="dataOverlayMode">heatmap</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">http://dx.doi.org/$click.value$</link>
+        </drilldown>
+      </table>
+    </panel>
+    <panel>
+      <title>RQ10: What products are derived from the use of data mining techniques in product lines engineering?</title>
+      <table>
+        <title>Click for go to the definition papers.</title>
+        <search>
+          <query>index=paper engineering |table DOI titulo</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">6</option>
+        <option name="dataOverlayMode">heatmap</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">http://dx.doi.org/$click.value$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>

@@ -1,0 +1,166 @@
+<dashboard>
+  <label>Trending of the research works.</label>
+  <description>To obtain the papers with a Data Mining technics in the Product Line engineering Process.</description>
+  <row>
+    <panel>
+      <title>RQ1: How they are distributed the studies in time?</title>
+      <chart>
+        <title>Papers found</title>
+        <search>
+          <query>index=paper | rex field=_raw "A1\s*\-\s*(?P&lt;autor&gt;.*?)\n" max_match=10| rex field=_raw "KW\s*\-\s*(?P&lt;key_word&gt;.*?)\n" max_match=20 | rex field=_raw "JF\s*\-\s*(?P&lt;journal&gt;.*?)\n" | rex field=_raw "TY\s*\-\s*(?P&lt;document_type&gt;.*?)\n" |rex field=_raw "Y1\s*\-\s*(?P&lt;date&gt;.*?)\/" | rex field=_raw "T1\s*\-\s*(?P&lt;titulo&gt;.*?)\n" |chart count BY date, document_type | rename document_type AS "Document Type"</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.seriesColors">[0x0072BB,0xFF4C3B,0xFFD034,0xC6C8CA]</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Key words</title>
+      <viz type="simple_xml_examples.tagcloud">
+        <title>Click for more information</title>
+        <search>
+          <query>index=paper | rex field=_raw "A1\s*\-\s*(?P&lt;autor&gt;.*?)\n" max_match=10| rex field=_raw "KW\s*\-\s*(?P&lt;palabra_clave&gt;.*?)\n" max_match=20 | rex field=_raw "JF\s*\-\s*(?P&lt;journal&gt;.*?)\n" | rex field=_raw "TY\s*\-\s*(?P&lt;tipo_documento&gt;.*?)\n" |rex field=_raw "Y1\s*\-\s*(?P&lt;fecha&gt;.*?)\/" | rex field=_raw "T1\s*\-\s*(?P&lt;titulo&gt;.*?)\n" | top palabra_clave</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="simple_xml_examples.tagcloud.labelField">palabra_clave</option>
+        <option name="simple_xml_examples.tagcloud.maxFontSize">32</option>
+        <option name="simple_xml_examples.tagcloud.minFontSize">10</option>
+        <option name="simple_xml_examples.tagcloud.valueField">count</option>
+        <drilldown>
+          <!-- Use set to specify the new token to be created.
+                     Use any token from the page or from the click event to produce the value needed. -->
+          <set token="palabrac">$row.palabra_clave$</set>
+          <!-- If we also set the form.sourcetype the input will get updated too -->
+          <set token="form.palabrac">$row.palabra_clave$</set>
+        </drilldown>
+      </viz>
+    </panel>
+    <panel>
+      <title>Paper types by year</title>
+      <chart id="detail_palabra_clave" depends="$palabrac$">
+        <title>Documents found by $palabrac$</title>
+        <search>
+          <query>index=paper  | rex field=_raw "A1\s*\-\s*(?P&lt;autor&gt;.*?)\n" max_match=10| rex field=_raw "KW\s*\-\s*(?P&lt;palabra_clave&gt;.*?)\n" max_match=20 | rex field=_raw "JF\s*\-\s*(?P&lt;journal&gt;.*?)\n" | rex field=_raw "TY\s*\-\s*(?P&lt;tipo_documento&gt;.*?)\n" |rex field=_raw "Y1\s*\-\s*(?P&lt;fecha&gt;.*?)\/" | rex field=_raw "T1\s*\-\s*(?P&lt;titulo&gt;.*?)\n" |WHERE palabra_clave="$palabrac$" |chart count BY fecha, tipo_documento | rename tipo_documento AS "Tipo de Documento"</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisLabelsY.majorUnit">1</option>
+        <option name="charting.axisTitleX.text">Date</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">Count</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>RQ2: What kind of content is posted about data mining in product line engineering?</title>
+      <table>
+        <title>Click for go to paper</title>
+        <search>
+          <query>| pivot Revision_de_la_literatura Revisin_de_la_literatura count(Revisin_de_la_literatura) AS "Count" SPLITROW doi AS DOI SPLITROW titulo AS Title SPLITROW autor AS Autor  SORT 100 autor ROWSUMMARY 0 COLSUMMARY 0 NUMCOLS 0 SHOWOTHER 1</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">6</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">http://dx.doi.org/$click.value$</link>
+        </drilldown>
+      </table>
+    </panel>
+    <panel>
+      <title>RQ3: What geographical distribution and authors are representative of our study?</title>
+      <map>
+        <title>Autor ubication</title>
+        <search>
+          <query>index=paper | rex field=_raw "A1\s*\-\s*(?P&lt;autor&gt;.*?)\n" max_match=10 | rex field=_raw "KW\s*\-\s*(?P&lt;key_word&gt;.*?)\n" max_match=20 | rex field=_raw "JF\s*\-\s*(?P&lt;journal&gt;.*?)\n" | rex field=_raw "TY\s*\-\s*(?P&lt;document_type&gt;.*?)\n" | rex field=_raw "Y1\s*\-\s*(?P&lt;date&gt;.*?)\/" | rex field=_raw "T1\s*\-\s*(?P&lt;titulo&gt;.*?)\n" |lookup autoreslokup autor OUTPUT university, country, lat, lon| geostats latfield=lat longfield=lon count by autor globallimit=0</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="mapping.map.scrollZoom">0</option>
+        <option name="mapping.map.zoom">1</option>
+        <option name="mapping.showTiles">1</option>
+        <option name="mapping.type">marker</option>
+      </map>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>RQ4: What category of research have assigned the documents found?</title>
+      <table>
+        <title>Click for go to paper</title>
+        <search>
+          <query>index=paperjson| rex field=_raw "grandTotal\'\:\s\w\'(?&lt;grandTotal&gt;[^\']+)\'" | Convert num(grandTotal) AS Citations| rex field=_raw "prism:doi\'\:\s\w\'(?&lt;DOI&gt;[^\']+)\'"| sort -grandTotal |join DOI [ search index="paper"]| table DOI titulo Citations</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">6</option>
+        <option name="dataOverlayMode">heatmap</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">http://dx.doi.org/$click.value$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>
